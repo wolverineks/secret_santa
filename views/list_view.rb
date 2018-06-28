@@ -1,12 +1,11 @@
 module ListView
   extend self
 
-  def self.render(list)
+  def render(row, list)
     puts "-----------------------"
     list.each do |santa|
-      SantaView.render(santa)
+      row.render(santa)
       puts "-----------------------"
     end
   end
-
 end
