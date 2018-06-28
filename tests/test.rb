@@ -1,13 +1,18 @@
-Dir["models/*.rb"].each { |file| load(file) }
-Dir["views/*.rb"].each { |file| load(file) }
+Dir["models/*.rb"].each do |file| load(file) end
+Dir["modules/*.rb"].each do |file| load(file) end
 
-parser = Parser.new("data/participants.csv")
-secret_santas = parser.secret_santas
+santas = [Parser.parse(SecretSanta, "data/participants.csv")]
+.map do |array| array.shuffle end
+.map do |shuffled| MatchMaker.make_matches(shuffled) end
 
-MatchMaker.make_matches(secret_santas.shuffle)
-
-secret_santas.each do |santa|
-  puts "-----------------------------------"
-  puts santa.gives_to.gives_to != santa ? "PASS" : "FAIL"
+result = santas.map do |santas|
+  santas.map do |santa|
+    santa.gives_to.gives_to != santa ? "PASS" : "FAIL"
+  end
 end
+
+puts "-----------------------------------"
+puts "santa.gives_to.gives_to != santa"
+puts "-----------------------------------"
+puts result
 puts "-----------------------------------"
