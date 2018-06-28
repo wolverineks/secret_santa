@@ -6,6 +6,7 @@ class SecretSanta
     @name = args[:name]
     @phone = args[:phone]
     @gives_to
+    @receives_from
   end
 
   def gives_to?(santa)
@@ -15,5 +16,4 @@ class SecretSanta
   def receives_from?(santa)
     santa == receives_from
   end
-
 end
